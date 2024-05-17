@@ -67,7 +67,7 @@ const deleteIcon = document.querySelector(".delete-image");
 
 // Using Promise.all
 
-const displayPost = function (title, text, comments) {
+const displayPost = function (title, text, comments, postId) {
   const divCreate = document.createElement("div");
   container.append(divCreate);
   const imgElementDelete = document.createElement("img");
@@ -75,7 +75,7 @@ const displayPost = function (title, text, comments) {
   divCreate.append(imgElementDelete);
   imgElementDelete.classList.add("delete");
   imgElementDelete.addEventListener("click", function () {
-    console.log("delete");
+    deletePosts(postId);
     divCreate.remove();
   });
   const imgElement = document.createElement("img");
@@ -110,6 +110,7 @@ const getPost = async function () {
       const post = posts[i];
       const postId = post.id;
       const comments = getComments(postId);
+
       allComments.push(comments);
       post.comments = comments;
     }
@@ -118,7 +119,7 @@ const getPost = async function () {
     for (let i = 0; i < posts.length; i++) {
       const post = posts[i];
       const comment = commentsArrays[i];
-      displayPost(post.title, post.body, comment);
+      displayPost(post.title, post.body, comment, post.id);
     }
   } catch (err) {
     console.log(err);
@@ -132,6 +133,14 @@ async function getComments(postId) {
   const comments = await response.json();
 
   return comments;
+}
+
+async function deletePosts(postId) {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${postId}`
+  );
+  const deleteResponse = await response.json();
+  return deleteResponse;
 }
 
 getPost();
