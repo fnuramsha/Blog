@@ -1,32 +1,35 @@
 div {
-    background-color: rgb(226, 215, 215);
-    width: 800px;
-    padding: 5px;
-    margin: 1px;
-    border: 2px; /* Border style */
-    border-radius: 20px; /* Rounded border */
-    padding: 20px; /* Padding to create space inside the border */
-    margin-bottom: 10px;
-    
-  }
-  body {
-    background-image: url('img.avif');
-    background-size: 100vw 100vh;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
-  
-  .container img {
-        display: inline-block; /* Make the image an inline-block element */
-        vertical-align: middle;/* Align the image vertically to the middle */
-        width: 50px; /* Adjust the width of the image as needed */
-        height: auto; /* Maintain aspect ratio */
-        margin-right: 10px; /* Adjust margin for spacing between image and title */
-        border-radius: 100px; 
-      }
-      
- .container h4 {
-        display: inline-block; /* Make the h4 element an inline-block element */
-        vertical-align: middle; /* Align the h4 element vertically to the middle */
-      }
-      
+  background-color: rgb(226, 215, 215);
+  width: 800px;
+  padding: 5px;
+  margin: 1px;
+  border: 2px; /* Border style */
+  border-radius: 20px; /* Rounded border */
+  padding: 20px; /* Padding to create space inside the border */
+  margin-bottom: 10px;
+}
+body {
+  background-image: url("img.avif");
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.container img {
+  display: inline-block; /* Make the image an inline-block element */
+  vertical-align: middle; /*Align the image vertically to the middle*/
+  width: 50px; /*Adjust the width of the image as needed*/
+  height: auto; /*Maintain aspect ratio */
+  margin-right: 10px; /*Adjust margin for spacing between image and title */
+  border-radius: 100px;
+}
+
+.container h4 {
+  display: inline-block; /* Make the h4 element an inline-block element */
+  vertical-align: middle; /*Align the h4 element vertically to the middle */
+}
+
+.bold-underline {
+  text-decoration: underline;
+  font-weight: bold;
+}

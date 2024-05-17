@@ -1,0 +1,51 @@
+div {
+  background-color: rgb(226, 215, 215);
+  width: 800px;
+  padding: 5px;
+  margin: 1px;
+  border: 2px;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+body {
+  background-image: url("img.avif");
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.test1 img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+  border-radius: 100px;
+}
+
+.test1 h4 {
+  display: inline-block;
+  vertical-align: middle;
+}
+.test2 img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+  border-radius: 100px;
+}
+
+.test2 h4 {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.comment {
+  text-decoration: underline;
+}
+.bold-underline {
+  text-decoration: underline;
+  font-weight: bold;
+}
