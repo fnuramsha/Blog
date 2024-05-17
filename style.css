@@ -15,7 +15,7 @@ body {
   background-attachment: fixed;
 }
 
-.container img.profile-picture {
+.container img {
   display: inline-block; /* Make the image an inline-block element */
   vertical-align: middle; /*Align the image vertically to the middle*/
   width: 50px; /*Adjust the width of the image as needed*/
@@ -38,4 +38,13 @@ body {
   width: 30px;
   height: auto;
   float: right; /* Use float to align to the right */
+}
+.delete {
+  width: 2px;
+  height: 2px;
+  float: right;
+}
+
+.hidden {
+  display: none;
 }

@@ -5,6 +5,7 @@ const div = document.querySelector(".test1");
 const title = document.querySelector(".element");
 const body = document.querySelector(".lists");
 const commentContainer = document.querySelector(".comment");
+const deleteIcon = document.querySelector(".delete-image");
 
 // const displayPost = function (title, text, comments) {
 //   const divCreate = document.createElement("div");
@@ -69,6 +70,14 @@ const commentContainer = document.querySelector(".comment");
 const displayPost = function (title, text, comments) {
   const divCreate = document.createElement("div");
   container.append(divCreate);
+  const imgElementDelete = document.createElement("img");
+  imgElementDelete.src = "delete.jpg";
+  divCreate.append(imgElementDelete);
+  imgElementDelete.classList.add("delete");
+  imgElementDelete.addEventListener("click", function () {
+    console.log("delete");
+    divCreate.remove();
+  });
   const imgElement = document.createElement("img");
   imgElement.src = "profile.png";
   divCreate.append(imgElement);
