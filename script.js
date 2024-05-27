@@ -67,9 +67,14 @@ const deleteIcon = document.querySelector(".delete-image");
 
 // Using Promise.all
 
+const newDiv = function () {};
+
 const displayPost = function (title, text, comments, postId) {
   const divCreate = document.createElement("div");
   container.append(divCreate);
+
+  // Add delete in old div
+
   const imgElementDelete = document.createElement("img");
   imgElementDelete.src = "delete.jpg";
   divCreate.append(imgElementDelete);
@@ -78,6 +83,14 @@ const displayPost = function (title, text, comments, postId) {
     deletePosts(postId);
     divCreate.remove();
   });
+  // Add posts in old div
+  const imgAddPost = document.createElement("img");
+  imgAddPost.src = "add-icon.jpeg";
+  divCreate.append(imgAddPost);
+  imgAddPost.classList.add("add");
+
+  // Add profile picture , title  and body to old div
+
   const imgElement = document.createElement("img");
   imgElement.src = "profile.png";
   divCreate.append(imgElement);
@@ -88,6 +101,45 @@ const displayPost = function (title, text, comments, postId) {
   bodyCreation.textContent = text;
   divCreate.append(bodyCreation);
 
+  // New div add
+  imgAddPost.addEventListener("click", async function () {
+    const divCreatePost = document.createElement("div");
+    container.append(divCreatePost);
+    //  Delete user created div
+    const imgElementDelete = document.createElement("img");
+    imgElementDelete.src = "delete.jpg";
+    divCreatePost.append(imgElementDelete);
+    imgElementDelete.classList.add("delete");
+    imgElementDelete.addEventListener("click", function () {
+      deletePosts(postId);
+      divCreatePost.remove();
+    });
+    // Add post manually
+    const imgAddPost = document.createElement("img");
+    imgAddPost.src = "add-icon.jpeg";
+    divCreatePost.append(imgAddPost);
+    imgAddPost.classList.add("add");
+    imgAddPost.addEventListener("click", async function () {
+      const returnedVal = await addPosts();
+      displayPost(returnedVal.newTitle, returnedVal.newBody, comments, postId);
+    });
+
+    const imgElement = document.createElement("img");
+    imgElement.src = "profile.png";
+    divCreatePost.append(imgElement);
+
+    const returnedVal = await addPosts();
+    console.log(returnedVal.newTitle);
+    const titleCreation = document.createElement("h4");
+
+    titleCreation.textContent = returnedVal.newTitle;
+    divCreatePost.append(titleCreation);
+    const bodyCreation = document.createElement("p");
+    bodyCreation.textContent = returnedVal.newBody;
+    divCreatePost.append(bodyCreation);
+  });
+
+  // Comments
   const commentText = document.createElement("p");
   commentText.textContent = "Comments";
   commentText.classList.add("bold-underline");
@@ -141,6 +193,52 @@ async function deletePosts(postId) {
   );
   const deleteResponse = await response.json();
   return deleteResponse;
+}
+
+async function addPosts() {
+  try {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
+      method: "POST",
+      body: JSON.stringify({
+        title: "Here is my new title",
+        body: "Body data is here",
+        userId: 1,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    const addResponse = await response.json();
+
+    return {
+      newTitle: addResponse.title,
+      newBody: addResponse.body,
+    };
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function editPosts(postId) {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${postId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          id: 1,
+          title: "Updated Title",
+          body: "Updated Body",
+          userId: 1,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 getPost();

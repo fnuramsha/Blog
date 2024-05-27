@@ -45,6 +45,12 @@ body {
   float: right;
 }
 
+.add {
+  width: 4px;
+  height: 4px;
+  float: right
+}
+
 .hidden {
   display: none;
 }
