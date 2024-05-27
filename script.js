@@ -67,8 +67,6 @@ const deleteIcon = document.querySelector(".delete-image");
 
 // Using Promise.all
 
-const newDiv = function () {};
-
 const displayPost = function (title, text, comments, postId) {
   const divCreate = document.createElement("div");
   container.append(divCreate);
@@ -83,14 +81,18 @@ const displayPost = function (title, text, comments, postId) {
     deletePosts(postId);
     divCreate.remove();
   });
-  // Add posts in old div
+  // Add post icon in old div
   const imgAddPost = document.createElement("img");
   imgAddPost.src = "add-icon.jpeg";
   divCreate.append(imgAddPost);
   imgAddPost.classList.add("add");
 
+  // Edit posts
+  const imgEditPost = document.createElement("img");
+  imgEditPost.src = "images.png";
+  divCreate.append(imgEditPost);
+  imgEditPost.classList.add("edit");
   // Add profile picture , title  and body to old div
-
   const imgElement = document.createElement("img");
   imgElement.src = "profile.png";
   divCreate.append(imgElement);
@@ -101,53 +103,89 @@ const displayPost = function (title, text, comments, postId) {
   bodyCreation.textContent = text;
   divCreate.append(bodyCreation);
 
+  // actions on edit
+  imgEditPost.addEventListener("click", async function () {
+    // debugger;
+    const returnedValEdit = await editPosts(postId);
+    titleCreation.textContent = "";
+    // debugger;
+    titleCreation.textContent = returnedValEdit.titleForEdit;
+    // divCreate.append(titleCreation);
+    bodyCreation.textContent = "";
+    bodyCreation.textContent = returnedValEdit.bodyForEdit;
+    // divCreate.append(bodyCreation);
+  });
+
+  // const imgElement = document.createElement("img");
+  // imgElement.src = "profile.png";
+  // divCreate.append(imgElement);
+  // const titleCreation = document.createElement("h4");
+  // titleCreation.textContent = title;
+  // divCreate.append(titleCreation);
+  // const bodyCreation = document.createElement("p");
+  // bodyCreation.textContent = text;
+  // divCreate.append(bodyCreation);
+
   // New div add
   imgAddPost.addEventListener("click", async function () {
-    const divCreatePost = document.createElement("div");
-    container.append(divCreatePost);
-    //  Delete user created div
-    const imgElementDelete = document.createElement("img");
-    imgElementDelete.src = "delete.jpg";
-    divCreatePost.append(imgElementDelete);
-    imgElementDelete.classList.add("delete");
-    imgElementDelete.addEventListener("click", function () {
-      deletePosts(postId);
-      divCreatePost.remove();
-    });
-    // Add post manually
-    const imgAddPost = document.createElement("img");
-    imgAddPost.src = "add-icon.jpeg";
-    divCreatePost.append(imgAddPost);
-    imgAddPost.classList.add("add");
-    imgAddPost.addEventListener("click", async function () {
-      const returnedVal = await addPosts();
-      displayPost(returnedVal.newTitle, returnedVal.newBody, comments, postId);
-    });
-
-    const imgElement = document.createElement("img");
-    imgElement.src = "profile.png";
-    divCreatePost.append(imgElement);
-
     const returnedVal = await addPosts();
-    console.log(returnedVal.newTitle);
-    const titleCreation = document.createElement("h4");
+    debugger;
+    displayPost(
+      returnedVal.newTitle,
+      returnedVal.newBody,
+      [],
+      returnedVal.postId
+    );
+    // const divCreatePost = document.createElement("div");
+    // container.append(divCreatePost);
+    // //  Delete user created div
+    // const imgElementDelete = document.createElement("img");
+    // imgElementDelete.src = "delete.jpg";
+    // divCreatePost.append(imgElementDelete);
+    // imgElementDelete.classList.add("delete");
+    // imgElementDelete.addEventListener("click", function () {
+    //   deletePosts(postId);
+    //   divCreatePost.remove();
+    // });
+    // // Add post manually
+    // const imgAddPost = document.createElement("img");
+    // imgAddPost.src = "add-icon.jpeg";
+    // divCreatePost.append(imgAddPost);
+    // imgAddPost.classList.add("add");
+    // imgAddPost.addEventListener("click", async function () {
+    //   const returnedVal = await addPosts();
+    //   displayPost(returnedVal.newTitle, returnedVal.newBody, comments, postId);
+    // });
+    // const editImage = document.createElement("img");
+    // editImage.src = "images.png";
+    // divCreatePost.append(editImage);
+    // editImage.classList.add("edit");
+    // const imgElement = document.createElement("img");
+    // imgElement.src = "profile.png";
+    // divCreatePost.append(imgElement);
 
-    titleCreation.textContent = returnedVal.newTitle;
-    divCreatePost.append(titleCreation);
-    const bodyCreation = document.createElement("p");
-    bodyCreation.textContent = returnedVal.newBody;
-    divCreatePost.append(bodyCreation);
+    // const returnedVal = await addPosts();
+    // console.log(returnedVal.newTitle);
+    // const titleCreation = document.createElement("h4");
+
+    // titleCreation.textContent = returnedVal.newTitle;
+    // divCreatePost.append(titleCreation);
+    // const bodyCreation = document.createElement("p");
+    // bodyCreation.textContent = returnedVal.newBody;
+    // divCreatePost.append(bodyCreation);
   });
 
   // Comments
-  const commentText = document.createElement("p");
-  commentText.textContent = "Comments";
-  commentText.classList.add("bold-underline");
-  divCreate.append(commentText);
-  for (let i = 0; i < comments.length; i++) {
-    const commentPara = document.createElement("p");
-    commentPara.textContent = comments[i].body;
-    divCreate.append(commentPara);
+  if (comments.length) {
+    const commentText = document.createElement("p");
+    commentText.textContent = "Comments";
+    commentText.classList.add("bold-underline");
+    divCreate.append(commentText);
+    for (let i = 0; i < comments.length; i++) {
+      const commentPara = document.createElement("p");
+      commentPara.textContent = comments[i].body;
+      divCreate.append(commentPara);
+    }
   }
 };
 
@@ -213,6 +251,7 @@ async function addPosts() {
     return {
       newTitle: addResponse.title,
       newBody: addResponse.body,
+      postId: addResponse.id,
     };
   } catch (err) {
     console.log(err);
@@ -226,7 +265,7 @@ async function editPosts(postId) {
       {
         method: "PUT",
         body: JSON.stringify({
-          id: 1,
+          id: postId,
           title: "Updated Title",
           body: "Updated Body",
           userId: 1,
@@ -236,6 +275,12 @@ async function editPosts(postId) {
         },
       }
     );
+    const resultEdit = await response.json();
+
+    return {
+      titleForEdit: resultEdit.title,
+      bodyForEdit: resultEdit.body,
+    };
   } catch (err) {
     console.log(err);
   }
