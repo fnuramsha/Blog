@@ -7,64 +7,6 @@ const body = document.querySelector(".lists");
 const commentContainer = document.querySelector(".comment");
 const deleteIcon = document.querySelector(".delete-image");
 
-// const displayPost = function (title, text, comments) {
-//   const divCreate = document.createElement("div");
-//   container.append(divCreate);
-//   const imgElement = document.createElement("img");
-//   imgElement.src = "profile.png";
-//   divCreate.append(imgElement);
-//   const titleCreation = document.createElement("h4");
-//   titleCreation.textContent = title;
-//   divCreate.append(titleCreation);
-//   const bodyCreation = document.createElement("p");
-//   bodyCreation.textContent = text;
-//   divCreate.append(bodyCreation);
-//   const commentText = document.createElement("p");
-//   commentText.textContent = "Comments";
-//   commentText.classList.add("bold-underline");
-//   divCreate.append("Comments");
-//   for (let i = 0; i < comments.length; i++) {
-//     const commentPara = document.createElement("p");
-//     commentPara.textContent = comments[i].body;
-
-//     divCreate.append(commentPara);
-//   }
-// };
-
-// const getPost = async function () {
-//   try {
-//     const postResponse = await fetch(
-//       "https://jsonplaceholder.typicode.com/posts"
-//     );
-//     const posts = await postResponse.json();
-//     for (let i = 0; i < posts.length; i++) {
-//       const post = posts[i];
-//       const postId = post.id;
-//       const comments = await getComments(postId);
-//       console.log(comments);
-//       post.comments = comments;
-//     }
-
-//     for (let i = 0; i < posts.length; i++) {
-//       const post = posts[i];
-//       displayPost(post.title, post.body, post.comments);
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-// async function getComments(postId) {
-//   const response = await fetch(
-//     `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
-//   );
-//   const comments = await response.json();
-
-//   return comments;
-// }
-
-// getPost();
-
 // Using Promise.all
 
 const displayPost = function (title, text, comments, postId) {
@@ -105,74 +47,22 @@ const displayPost = function (title, text, comments, postId) {
 
   // actions on edit
   imgEditPost.addEventListener("click", async function () {
-    // debugger;
     const returnedValEdit = await editPosts(postId);
     titleCreation.textContent = "";
-    // debugger;
     titleCreation.textContent = returnedValEdit.titleForEdit;
-    // divCreate.append(titleCreation);
     bodyCreation.textContent = "";
     bodyCreation.textContent = returnedValEdit.bodyForEdit;
-    // divCreate.append(bodyCreation);
   });
-
-  // const imgElement = document.createElement("img");
-  // imgElement.src = "profile.png";
-  // divCreate.append(imgElement);
-  // const titleCreation = document.createElement("h4");
-  // titleCreation.textContent = title;
-  // divCreate.append(titleCreation);
-  // const bodyCreation = document.createElement("p");
-  // bodyCreation.textContent = text;
-  // divCreate.append(bodyCreation);
 
   // New div add
   imgAddPost.addEventListener("click", async function () {
     const returnedVal = await addPosts();
-    debugger;
     displayPost(
       returnedVal.newTitle,
       returnedVal.newBody,
       [],
       returnedVal.postId
     );
-    // const divCreatePost = document.createElement("div");
-    // container.append(divCreatePost);
-    // //  Delete user created div
-    // const imgElementDelete = document.createElement("img");
-    // imgElementDelete.src = "delete.jpg";
-    // divCreatePost.append(imgElementDelete);
-    // imgElementDelete.classList.add("delete");
-    // imgElementDelete.addEventListener("click", function () {
-    //   deletePosts(postId);
-    //   divCreatePost.remove();
-    // });
-    // // Add post manually
-    // const imgAddPost = document.createElement("img");
-    // imgAddPost.src = "add-icon.jpeg";
-    // divCreatePost.append(imgAddPost);
-    // imgAddPost.classList.add("add");
-    // imgAddPost.addEventListener("click", async function () {
-    //   const returnedVal = await addPosts();
-    //   displayPost(returnedVal.newTitle, returnedVal.newBody, comments, postId);
-    // });
-    // const editImage = document.createElement("img");
-    // editImage.src = "images.png";
-    // divCreatePost.append(editImage);
-    // editImage.classList.add("edit");
-    // const imgElement = document.createElement("img");
-    // imgElement.src = "profile.png";
-    // divCreatePost.append(imgElement);
-
-    // const returnedVal = await addPosts();
-    // console.log(returnedVal.newTitle);
-    // const titleCreation = document.createElement("h4");
-
-    // titleCreation.textContent = returnedVal.newTitle;
-    // divCreatePost.append(titleCreation);
-    // const bodyCreation = document.createElement("p");
-    // bodyCreation.textContent = returnedVal.newBody;
-    // divCreatePost.append(bodyCreation);
   });
 
   // Comments
@@ -288,92 +178,62 @@ async function editPosts(postId) {
 
 getPost();
 
-// -----------------------------------
+// Using Async await
 
-// const displayComments = function (showComment) {
-//   const divForComment = document.createElement("div");
-//   container.append(divForComment);
-//   const commentElement = document.createElement("p");
-//   commentElement.textContent = showComment;
-//   divForComment.append(commentElement);
-// };
-
-// const getComments = async function (postId) {
-//   try {
-//     const res = await fetch(
-//       `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
-//     );
-//     const comments = await res.json();
-
-//     for (let i = 0; i < comments.length; i++) {
-//       const commentLists = comments[i];
-//       displayComments(commentLists.body);
-//       // console.log(commentLists);
-//       // const divForComment = document.createElement("div");
-//       // container.append(divForComment);
-//       // const commentElement = document.createElement("u");
-//       // commentElement.textContent = commentLists.postId;
-//       // divForComment.append(commentElement);
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-// const getPost = async function () {
-//   try {
-//     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-//     const posts = await response.json();
-//     for (let i = 0; i < posts.length; i++) {
-//       const newPost = posts[i];
-//       displayPost(newPost.title, newPost.body);
-//       getComments(newPost.id);
-//       // title.textContent = newPost.title;
-//       // body.textContent = newPost.body;
-//       // commentContainer.addEventListener("click", function () {
-//       //   displayComments(newPost.id);
-//       // });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-// getPost();
-
-// old code
-
-// const displayPost = function (showTitle, showText) {
+// const displayPost = function (title, text, comments) {
 //   const divCreate = document.createElement("div");
 //   container.append(divCreate);
 //   const imgElement = document.createElement("img");
 //   imgElement.src = "profile.png";
 //   divCreate.append(imgElement);
 //   const titleCreation = document.createElement("h4");
-//   titleCreation.textContent = showTitle;
+//   titleCreation.textContent = title;
 //   divCreate.append(titleCreation);
 //   const bodyCreation = document.createElement("p");
-//   bodyCreation.textContent = showText;
+//   bodyCreation.textContent = text;
 //   divCreate.append(bodyCreation);
-//   //   const commentSection = document.createElement("p");
-//   //   commentSection.textContent = showComment;
-//   //   divCreate.append(commentSection);
+//   const commentText = document.createElement("p");
+//   commentText.textContent = "Comments";
+//   commentText.classList.add("bold-underline");
+//   divCreate.append("Comments");
+//   for (let i = 0; i < comments.length; i++) {
+//     const commentPara = document.createElement("p");
+//     commentPara.textContent = comments[i].body;
+
+//     divCreate.append(commentPara);
+//   }
 // };
 
 // const getPost = async function () {
 //   try {
-//     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-//     const posts = await response.json();
+//     const postResponse = await fetch(
+//       "https://jsonplaceholder.typicode.com/posts"
+//     );
+//     const posts = await postResponse.json();
+//     for (let i = 0; i < posts.length; i++) {
+//       const post = posts[i];
+//       const postId = post.id;
+//       const comments = await getComments(postId);
+//       console.log(comments);
+//       post.comments = comments;
+//     }
 
 //     for (let i = 0; i < posts.length; i++) {
-//       const newPost = posts[i];
-
-//       displayPost(newPost.title, newPost.body);
-//       //   container.textContent = newPost.title;
-//       //   container.textContent = newPost.body;
+//       const post = posts[i];
+//       displayPost(post.title, post.body, post.comments);
 //     }
 //   } catch (err) {
 //     console.log(err);
 //   }
 // };
+
+// async function getComments(postId) {
+//   const response = await fetch(
+//     `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
+//   );
+//   const comments = await response.json();
+
+//   return comments;
+// }
 
 // getPost();
