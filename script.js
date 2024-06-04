@@ -1,7 +1,6 @@
 "use strict";
 
 const container = document.querySelector(".container");
-const div = document.querySelector(".test1");
 const title = document.querySelector(".element");
 const body = document.querySelector(".lists");
 const commentContainer = document.querySelector(".comment");
@@ -86,16 +85,16 @@ const getPost = async function () {
     );
     const posts = await postResponse.json();
     const allComments = [];
+    // for getting the comments on the post
     for (let i = 0; i < posts.length; i++) {
       const post = posts[i];
       const postId = post.id;
       const comments = getComments(postId);
 
       allComments.push(comments);
-      post.comments = comments;
     }
     const commentsArrays = await Promise.all(allComments);
-
+    // for displaying the posts and comments together
     for (let i = 0; i < posts.length; i++) {
       const post = posts[i];
       const comment = commentsArrays[i];
@@ -117,7 +116,10 @@ async function getComments(postId) {
 
 async function deletePosts(postId) {
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${postId}`
+    `https://jsonplaceholder.typicode.com/posts/${postId}`,
+    {
+      method: "DELETE",
+    }
   );
   const deleteResponse = await response.json();
   return deleteResponse;
